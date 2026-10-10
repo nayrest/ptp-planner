@@ -1,10 +1,17 @@
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from ptp.gm import gm_candidates, reach_table, choose_gm
 from ptp.rating import rank_links, effect_within_budget
 
 app = FastAPI(title="PTP Planner")
+
+STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
 # ---------- Модели входных данных ----------
@@ -44,6 +51,9 @@ class RatingRequest(BaseModel):
 def health():
     return {"status": "ok"}
 
+@app.get("/", include_in_schema=False)
+def index():
+    return FileResponse(STATIC_DIR / "index.html")
 
 @app.post("/gm")
 def plan_gm(req: GMRequest):

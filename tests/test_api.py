@@ -41,3 +41,12 @@ def test_rating_endpoint():
     body = r.json()
     assert body["ranking"] == ["e1", "e2", "e3", "e5", "e4"]
     assert body["effect"] == 120
+
+def test_index_page():
+    r = client.get("/")
+    assert r.status_code == 200
+    assert "PTP Planner" in r.text
+
+def test_static_files():
+    assert client.get("/static/style.css").status_code == 200
+    assert client.get("/static/app.js").status_code == 200

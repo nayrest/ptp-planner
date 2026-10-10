@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PTP Planner</title>
+  <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <h1>PTP Planner</h1>
+  <p>Размещение Grand Master и назначение основного/резервного GM для площадок сети</p>
+</header>
+
+<main>
+  <section class="card">
+    <h3>Сеть (JSON)</h3>
+    <input type="file" id="file" accept=".json">
+    <textarea id="network" placeholder='{"sites": [...], "links": [...]}'></textarea>
+    <label>Бюджет задержки, мкс: <input type="number" id="t_max" value="1500"></label>
+    <label>Лимит БС на один GM: <input type="number" id="cap" value="500"></label>
+    <button id="run">Рассчитать</button>
+    <div id="error"></div>
+  </section>
+
+  <section class="card">
+    <h3>Схема сети</h3>
+    <div class="legend">
+      <span>🟨 GM</span><span>🟦 площадка</span>
+      <span>— оптика</span><span>- - - РРЛ</span>
+    </div>
+    <div id="graph"></div>
+
+    <h3>Назначения</h3>
+    <table>
+      <thead><tr><th>Площадка</th><th>Основной GM</th><th>Резервный GM</th></tr></thead>
+      <tbody id="assign"></tbody>
+    </table>
+
+    <h3>Нагрузка GM</h3>
+    <div id="loads"></div>
+  </section>
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
