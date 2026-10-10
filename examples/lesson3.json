@@ -1,0 +1,17 @@
+{
+  "gm": "G",
+  "sites": [
+    {"id": "P", "importance": 10},
+    {"id": "Q", "importance": 20},
+    {"id": "R", "importance": 90},
+    {"id": "S", "importance": 30},
+    {"id": "T", "importance": 15}
+  ],
+  "links": [
+    {"id": "e1", "u": "G", "v": "P", "cost": 10},
+    {"id": "e2", "u": "P", "v": "Q", "cost": 30},
+    {"id": "e3", "u": "Q", "v": "R", "cost": 10},
+    {"id": "e4", "u": "G", "v": "S", "cost": 20},
+    {"id": "e5", "u": "P", "v": "T", "cost": 5}
+  ]
+}
