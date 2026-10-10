@@ -11,3 +11,16 @@ def load_links(path):
         links.append((link["u"], link["v"], link["kind"]))
 
     return links
+
+def load_network(path):
+    """Возвращает (links, bs): список линков и словарь {площадка: число БС}."""
+    links = load_links(path)          # линки читаем уже готовой функцией
+
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+
+    bs = {}
+    for site in data["sites"]:
+        bs[site["id"]] = site["bs"]
+
+    return links, bs
