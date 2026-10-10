@@ -1,0 +1,39 @@
+name: CI
+
+# Когда запускать: при push и при pull request в main
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest              # GitHub даёт чистую виртуалку с Ubuntu
+    steps:
+      - uses: actions/checkout@v4       # скачать код репозитория
+
+      - uses: actions/setup-python@v5   # поставить Python
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: python -m pytest -v
+
+  docker:
+    needs: test                         # только если тесты прошли
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t ptp-planner .
+
+      - name: Smoke test — запустить контейнер и проверить /health
+        run: |
+          docker run -d -p 8000:8000 --name app ptp-planner
+          sleep 5
+          curl --fail http://127.0.0.1:8000/health
