@@ -1,0 +1,11 @@
+{
+  "links": [
+    {"u": "A", "v": "B", "kind": "fo"},
+    {"u": "A", "v": "C", "kind": "fo"},
+    {"u": "B", "v": "D", "kind": "rrl"},
+    {"u": "C", "v": "D", "kind": "fo"},
+    {"u": "D", "v": "E", "kind": "fo"},
+    {"u": "C", "v": "E", "kind": "rrl"},
+    {"u": "E", "v": "F", "kind": "rrl"}
+  ]
+}

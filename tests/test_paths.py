@@ -1,4 +1,5 @@
 from ptp.paths import build_graph, dijkstra, restore_path, path_delay
+from ptp.loader import load_links
 
 LINKS = [
     ("A", "B", "fo"), ("A", "C", "fo"), ("B", "D", "rrl"),
@@ -16,3 +17,10 @@ def test_best_path():
 
 def test_fewer_links_is_slower():
     assert path_delay(["A", "C", "E", "F"], LINKS) == 510
+
+def test_load_from_file():
+    links = load_links("examples/lesson1.json")
+    assert len(links) == 7
+    assert links[0] == ("A", "B", "fo")
+    dist, prev = dijkstra(build_graph(links), "A")
+    assert dist["F"] == 440
